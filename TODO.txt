@@ -1,0 +1,245 @@
+1. Under Select File, Remove URL link - 
+	solution --
+	add below css code into afsac-message board fragment edit_message.jsp
+	<style>
+	#p_p_id_com_liferay_item_selector_web_portlet_ItemSelectorPortlet_ .navbar-nav li:nth-child(2) {
+	  display: none;
+	}
+	</style>
+2. Disable the link, URL's, images from the reply textbox. 
+	solution --
+	add javascript code edit_message.jsp and validate condition of user is replying
+	<aui:script>
+		setTimeout(function(){
+		  var x = document.getElementsByClassName("cke_button__imageselector");
+		  x[0].style.display = "none";
+	  	}, 500);
+	</aui:script>
+
+
+3. Remove "My Sites" option from the logged in User dropdown icon. Done
+	solution --
+	add css code into theme's _custom.scss part
+	.dropdown-menu-personal-menu .list-unstyled li:nth-child(2) {
+	  display: none;
+	}
+4. Put file validation while uploading the image from admin id - 
+	solution -- 
+	add javascript code edit_message_attachment.jsp and validate condition of user is replying
+	
+	uploader._uploader.on(
+            'uploadcomplete',
+            function(event) {
+            	
+            	var uploadedFiles = uploader._fileListContent.all('.upload-file.upload-complete');
+            	var fileName = uploadedFiles._nodes[0].getAttribute("data-filename");
+            	var fileExtension = fileName.substr(fileName.lastIndexOf('.') + 1).split('.')[0]; // fileName.split('.')[1];
+            	
+            	
+            	
+            	console.log(fileExtension);     
+               
+                if(!(fileExtension == "doc" || fileExtension == "png" || fileExtension == "jpeg" || fileExtension == "jpg" || fileExtension == "pdf", ){
+                	var ID = uploadedFiles._nodes[0].getAttribute("id");
+                	// console.log(ID);
+                	// console.log($("#" +ID +" a")[0]);
+                	alert("invalid file formate please select another file")
+                	$("#" +ID +" a")[0].click();
+                	//$("#" +ID +" a").click();
+                }
+            }
+        );
+
+
+5. Disable non-relevant languages - 
+	solution -- add the below tags in your portal-ext.properties.
+
+	com.liferay.portal.servlet.filters.i18n.I18nFilter=false
+	locales=en_US
+	locale.prepend.friendly.url.style=0
+	locales.enabled=en_US
+
+6. Currently it is running on "http" , it should be run on 
+"https",all VA clear site runs on https. 
+	solution -- 
+
+
+		Step 1 to generate CSR and JKS :
+
+
+		keytool -genkey -alias server -keyalg RSA -keysize 2048 -keystore localhost.jks -dname
+		"CN=localhost,OU=ITDEV, O=TechMahindra, L=Delhi, ST=Delhi, C=IN" &&
+		keytool -certreq -alias server -file localhost.csr -keystore localhost.jks &&
+		echo Your certificate signing request is in localhost.csr.  Your keystore file is localhost.jks.  Thanks for using the DigiCert keytool CSR helper.
+
+		Step 2: change in server.xml
+
+		<Connector port="8443" protocol="org.apache.coyote.http11.Http11NioProtocol"
+		           maxThreads="150" SSLEnabled="true" scheme="https" secure="true"
+		           clientAuth="false" sslProtocol="TLS"
+		           keyAlias="server" keystoreFile="D:/xampp/tomcat/ssl/localhost.jks"
+		           keystorePass="123456" />
+
+		Step3: Restart Server.
+
+		Check : https://localhost:8443/
+
+
+
+7. PUT and DELETE should disable. 
+	solution -- it is done need to retest with VA/PT tool
+	
+	
+------------------------------------------------------------------------------------------------
+com.liferay.portal.servlet.filters.i18n.I18nFilter=false
+locales=en_US
+locale.prepend.friendly.url.style=0
+locales.enabled=en_US
+
+editor.wysiwyg.default=ckeditor
+editor.wysiwyg.portal-web.docroot.html.portlet.blogs.edit_entry.jsp=ckeditor
+editor.wysiwyg.portal-web.docroot.html.portlet.journal.edit_article_content.jsp=ckeditor
+editor.wysiwyg.portal-impl.portlet.ddm.text_html.ftl=ckeditor
+
+editor.wysiwyg.portal-web.docroot.html.portlet.message_boards.edit_message.bb_code.jsp=ckeditor_bbcode
+editor.wysiwyg.portal-web.docroot.html.portlet.message_boards.edit_message.html.jsp=ckeditor
+
+
+------------------------------------------------------------------------------------------------
+package lfry.req.filter.portlet.filter;
+
+
+
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.BaseFilter;
+
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.osgi.service.component.annotations.Component;
+
+
+@Component(
+ immediate = true, 
+ property = {
+ "servlet-context-name=", 
+ "servlet-filter-name=Custom Filter",
+ "url-pattern=/*" 
+ }, 
+ service = Filter.class
+ )
+public class RequestFilter extends BaseFilter {
+	private static final Log _log = LogFactoryUtil.getLog(RequestFilter.class);
+	
+	@Override
+	 protected void processFilter(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+	 throws Exception {
+	 _log.info("Request Filter is invoked");
+	 _log.info("Requested method : "+request.getMethod());
+		
+		if (request.getMethod().equalsIgnoreCase("PUT") || request.getMethod().equalsIgnoreCase("OPTIONS")) {
+			response.setStatus(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
+//			response.sendRedirect("/errors/code.jsp");
+//            return;
+        }else {
+        	
+        	super.processFilter(request, response, filterChain);
+        }
+	 }
+
+	 @Override
+	 protected Log getLog() {
+	 return _log;
+	 }
+
+//	 filterChain.doFilter(request, servletResponse);
+
+}
+
+
+------------------------------------------------------------------------------------------------
+keytool -genkey -alias tomcat -keypass changeit -keyalg RSA
+The above command will create $USER/.keystore file
+keytool -export -alias tomcat -keypass changeit -file server.crt
+
+keytool -import -file server.crt -keypass changeit -keystore $JAVA_HOME\jre\lib\security\cacerts
+
+------------------------------------------------------------------------------------------------
+import java.io.IOException;
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+ 
+/**
+ * Servlet Filter implementation class CORSFilter
+ */
+// Enable it for Servlet 3.x implementations
+/* @ WebFilter(asyncSupported = true, urlPatterns = { "/*" }) */
+public class CORSFilter implements Filter {
+ 
+    /**
+     * Default constructor.
+     */
+    public CORSFilter() {
+        // TODO Auto-generated constructor stub
+    }
+ 
+    /**
+     * @see Filter#destroy()
+     */
+    public void destroy() {
+        // TODO Auto-generated method stub
+    }
+ 
+    /**
+     * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
+     */
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain)
+            throws IOException, ServletException {
+ 
+        HttpServletRequest request = (HttpServletRequest) servletRequest;
+        System.out.println("CORSFilter HTTP Request: " + request.getMethod());
+ 
+        // Authorize (allow) all domains to consume the content
+        ((HttpServletResponse) servletResponse).addHeader("Access-Control-Allow-Origin", "*");
+        ((HttpServletResponse) servletResponse).addHeader("Access-Control-Allow-Methods","GET, OPTIONS, HEAD, PUT, POST");
+ 
+        HttpServletResponse resp = (HttpServletResponse) servletResponse;
+ 
+        // For HTTP OPTIONS verb/method reply with ACCEPTED status code -- per CORS handshake
+        if (request.getMethod().equals("OPTIONS")) {
+            resp.setStatus(HttpServletResponse.SC_ACCEPTED);
+            return;
+        }
+ 
+        // pass the request along the filter chain
+        chain.doFilter(request, servletResponse);
+    }
+ 
+    /**
+     * @see Filter#init(FilterConfig)
+     */
+    public void init(FilterConfig fConfig) throws ServletException {
+        // TODO Auto-generated method stub
+    }
+ 
+}
+
+--------------------------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------
