@@ -1,4 +1,4 @@
-
+https://www.geocerts.com/support/install-ssl-certificate-tomcat-server
 
 generate ssl in localhost specific  file location ==> https://liferay.dev/blogs/-/blogs/liferay-portal-ssl-configuration
 
