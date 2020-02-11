@@ -1,0 +1,10 @@
+generate ssl in localhost specific  file location ==>
+
+If we want store generated key in our own keystore file then use following command 
+keytool -genkey -keystore c:\users\localhost.keystore -alias adjtomcat -keyalg RSA
+
+keytool -export -alias adjtomcat -keypass changeit -file myserver.cert  –keystore c:/users/localhost.keystore
+
+We will import all certificates in cacerts file this default file to server. Now we need to import our created certificate into cacerts (jdk1.6.0_43\jre\lib\security\cacerts)
+
+keytool -import -alias adjtomcat -file "C:\myserver.cert" -keypass changeit -keystore "C:\Program Files\Java\jdk1.8.0_121\jre\lib\security\cacerts"
