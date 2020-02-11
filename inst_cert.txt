@@ -1,4 +1,6 @@
-generate ssl in localhost specific  file location ==>
+
+
+generate ssl in localhost specific  file location ==> https://liferay.dev/blogs/-/blogs/liferay-portal-ssl-configuration
 
 If we want store generated key in our own keystore file then use following command 
 keytool -genkey -keystore c:\users\localhost.keystore -alias adjtomcat -keyalg RSA
@@ -8,3 +10,29 @@ keytool -export -alias adjtomcat -keypass changeit -file myserver.cert  –keyst
 We will import all certificates in cacerts file this default file to server. Now we need to import our created certificate into cacerts (jdk1.6.0_43\jre\lib\security\cacerts)
 
 keytool -import -alias adjtomcat -file "C:\myserver.cert" -keypass changeit -keystore "C:\Program Files\Java\jdk1.8.0_121\jre\lib\security\cacerts"
+
+generate cert : 
+Enter keystore password:
+Owner: CN=localhost, OU=adj, O=adj, L=noida, ST=up, C=in
+Issuer: CN=localhost, OU=adj, O=adj, L=noida, ST=up, C=in
+Serial number: 20a4e40
+Valid from: Tue Feb 11 23:03:37 IST 2020 until: Mon May 11 23:03:37 IST 2020
+Certificate fingerprints:
+         MD5:  33:2A:14:B9:4E:4A:B2:0A:E6:A1:ED:A8:9A:9E:B9:15
+         SHA1: 51:AE:13:32:44:1C:A5:DA:F4:F1:BD:71:A0:82:85:2E:B8:69:E0:77
+         SHA256: 5E:6A:A5:E1:92:CC:8E:C6:BC:6C:73:F0:A3:37:A5:2A:64:7F:A9:BC:4B:DF:44:EC:B5:2D:F4:F3:67:11:A0:A8
+         Signature algorithm name: SHA256withRSA
+         Version: 3
+
+Extensions:
+
+#1: ObjectId: 2.5.29.14 Criticality=false
+SubjectKeyIdentifier [
+KeyIdentifier [
+0000: 2A E4 61 FE D5 23 5C 71   B5 85 6C 89 58 F0 EE BB  *.a..#\q..l.X...
+0010: CE 78 DA A7                                        .x..
+]
+]
+
+Trust this certificate? [no]:  yes
+Certificate was added to keystore
