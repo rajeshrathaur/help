@@ -224,7 +224,7 @@ public class CORSFilter implements Filter {
         // pass the request along the filter chain
         chain.doFilter(request, servletResponse);
     }
- 
+	
     /**
      * @see Filter#init(FilterConfig)
      */
@@ -233,9 +233,19 @@ public class CORSFilter implements Filter {
     }
  
 }
-
+//edit_message_quick
 --------------------------------------------------------------------------------------------------
-
+<aui:script>          
+	$( document ).ready(function() {
+		CKEDITOR.config.removeButtons = 'Image,Audio,Video,Link,UploadImage';		
+		setTimeout(function(){
+		  var x = document.getElementById("cke_58");
+		  x.style.display = "none";
+	  	}, 3000);
+	    	 
+	});
+    
+</aui:script>
 --------------------------------------------------------------------------------------------------
 
 --------------------------------------------------------------------------------------------------
