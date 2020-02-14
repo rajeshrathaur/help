@@ -1,3 +1,17 @@
 Follow after step#3
 
 https://www.thesslstore.com/knowledgebase/ssl-install/tomcat-ssl-installation/
+
+
+https://in.godaddy.com/help/tomcat-generate-csrs-and-install-certificates-5239
+
+
+You can create a key and certificate yourself instead of downloading them from this page. This makes your key more secure. To generate a key:
+
+openssl genrsa -out localhost.key 2048
+
+And the certificate:
+
+openssl req -new -x509 -key localhost.key -out localhost.cert -days 3650 -subj /CN=localhost
+
+
