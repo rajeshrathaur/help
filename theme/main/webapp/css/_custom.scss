@@ -1,0 +1,349 @@
+/* outer header Section */
+
+.secondary-bg {
+    @include background-color($default-color);
+}
+
+.t-left-side {
+    ul {
+        margin: 0px;
+        padding: 0px;
+        list-style-type: none;
+
+        li {
+            position: relative;
+            color: $text-color;
+            display: inline-block;
+      
+
+            a {
+                  color: $text-color;
+                  margin-right: 10px;
+                  margin-left: 10px;
+                  font-size: 0.9em;
+
+                &:hover {
+                    text-decoration: none;
+                }
+            }
+            
+            &:before {
+				        content: "";
+					    position: absolute;
+					    left: 0px;
+					    bottom: 3px;
+					    height: 65%;
+					    width: 100%;
+					    border-left: 1px solid #fff;
+}
+
+        }
+    }
+}
+
+
+/* Logo header Section */
+
+.logo-section {
+    background: $top-header-color;
+}
+
+.logo-container {
+    .logo-image {
+        width: auto;
+    }
+    
+    .logo-height {
+       height: 80px;
+    
+    }
+}
+
+
+
+/* Navigation */
+
+.navbar-background-color {
+    @include background-color($default-color);
+
+}
+
+.custom-navbar {
+    padding: 0px;
+
+    li {
+        a {
+            font-weight: normal;
+            font-size: 17px;
+
+            &:hover {
+                color: #fff !important;
+            }
+        }
+    }
+}
+
+.parent-nav {
+    &:hover {
+        @include background-color($default-color);
+        color: #fff !important;
+    }
+}
+
+.selected {
+    @include background-color($default-color);
+    color: $text-color;
+}
+
+.child-menu {
+    box-shadow: none;
+    background-color: #f9f9f9;
+    border-radius: 0;
+    border: none;
+    border-bottom: 2px solid #571184;
+    min-width: 19em;
+    position: absolute;
+    top: 54px;
+    left: 0px;
+    list-style-type: none;
+    z-index: 999;
+    padding: 0;
+    display: none;
+
+    li {
+        color: #000;
+        font-weight: 500;
+        padding: 15px 0px;
+        line-height: 1;
+        border-bottom: 1px solid #ddd;
+
+        a {
+            color: #000;
+            font-weight: 500;
+
+            &:hover {
+                color: #ff4081 !important;
+            }
+        }
+    }
+}
+
+.modify-pages li:hover .child-menu {
+    display: block;
+}
+
+
+/*  Slider  */
+
+.home-banner {
+    .item {
+        height: 350px;
+
+        img {
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    .owl-dots {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+}
+
+
+
+/* =============== About Section ============= */
+
+
+.wrapper-section {
+    @include wrapper-padding($wrapper-padding);
+    @include background-color($background-white)
+}
+
+.about-wrapper-container {
+    .wrapper-title {
+        @include font-family($font-family);
+        font-weight: 700;
+        font-size: 2em;
+        line-height: 1.2;
+        color: #323335;
+        margin-top: 0;
+    }
+
+    .wrapper-content {
+        @include font-family($font-family);
+        font-weight: 400;
+        line-height: 26px;
+        color: #727272;
+        padding-top: 15px;
+    }
+}
+
+
+/* ================== Events ===================*/
+
+
+.events-section {
+    @include wrapper-padding($wrapper-padding-1);
+
+    .wrapper-container {
+        .list-inline {
+            max-height: 182px;
+            overflow: hidden;
+
+            li {
+                position: relative;
+
+                a {
+                    margin-left: 20px;
+                    color: inherit;
+                    width: 350px;
+                    display: inline-block;
+
+                    &:hover {
+                        text-decoration: none;
+                    }
+                }
+
+                &::before {
+                    position: absolute;
+                    font-family: "Font Awesome 5 Free";
+                    font-weight: 900;
+                    content: "\f101";
+                    color: $default-color;
+                }
+            }
+
+
+        }
+
+        .header-transparent {
+            background: $default-color;
+            @include border();
+        }
+
+        .custom-card-footer {
+            background: transparent;
+            border-top: none;
+        }
+
+        .card-box-shadow {
+            @include box-shadow(0px 0px 2px 0px rgba(0, 0, 0, 0.18));
+        }
+
+        .button-color,
+        .button-color,
+        .button-color:hover,
+        .button-color:active,
+        .button-color:focus {
+            background: $default-color !important;
+
+        }
+
+    }
+}
+
+/*================== Latest News ==================*/
+
+
+.latest-news-section {
+    margin-top: -10px;
+.marquee {
+   @include background-color(#e8554e);
+    margin: 0 auto;
+    height: 40px;
+    white-space: nowrap;
+    overflow: hidden;
+    box-sizing: border-box;
+    position: relative;
+
+    &:before,
+    &:after {
+        position: absolute;
+        top: 0;
+        width: 50px;
+        height: 40px;
+        content: "";
+        z-index: 1;
+    }
+
+    &:before {
+        left: 0;
+        background: linear-gradient(to right, #e8554e 10%, transparent 50%);
+    }
+
+    &:after {
+        right: 0;
+        background: linear-gradient(to left, #e8554e 10%, transparent 50%);
+    }
+}
+
+.marquee__content {
+    width: auto;
+    display: flex;
+    line-height: 40px;
+    animation: marquee 10s linear infinite forwards;
+
+    &:hover {
+        animation-play-state: paused;
+    }
+}
+
+.list-inline {
+    display: flex;
+    justify-content: space-around;
+    width: 33.33%;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+        margin-right: 50px;
+        position: relative;
+        a {
+            color: inherit;
+            margin-left: 20px;
+            &:hover {
+                text-decoration: none;
+            }
+         
+        }
+        
+        &:before {
+                position: absolute;
+                font-family: "Font Awesome 5 Free";
+                font-weight: 900;
+                content: "\f101";
+                color: $default-color;
+
+            }
+    }
+}
+
+@keyframes marquee {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-66.6%);
+    }
+}
+
+}
+
+/*================ Logo Slider =============*/
+
+.logo-slider {
+  @include wrapper-padding($wrapper-padding-2)
+}
+
+/* footer */
+.footer-section {
+    @include background-color($default-color);
+    @include wrapper-padding($wrapper-padding);
+    @include border-top();
+}

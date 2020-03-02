@@ -1,0 +1,53 @@
+/*================ variable Start=================*/
+
+$section-background-color: #f9f4f4;
+$background-white: #fff;
+$font-family: "Raleway",sans-serif;
+$wrapper-padding: 50px 0px;
+$wrapper-padding-1: 30px 0px;
+$wrapper-padding-2: 20px;
+$default-color: #30466f;
+$top-header-color: #5B90C6;
+$outer-header-color: #1b528a;
+$navbar-background-color: #1b528a;
+$text-color: #fff;
+
+
+/*================ Mixin Start=================*/
+
+@mixin background-color($color) {
+    background: $color;
+}
+
+@mixin border-top() {
+border-top: 3px solid #e8554e;
+}
+
+@mixin border() {
+    border-bottom: 2px solid #e8554e;
+}
+
+@mixin default-color($default-color) {
+    background: $default-color;
+}
+
+@mixin wrapper-padding($padding-1) {
+    padding:$padding-1;
+}
+
+@mixin font-family($font-family) {
+    font-family: $font-family;
+}
+
+@mixin box-shadow($shadow...) {
+    -webkit-box-shadow: $shadow;
+    -moz-box-shadow: $shadow;
+    box-shadow: $shadow;
+}
+
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+     -moz-border-radius: $radius;
+      -ms-border-radius: $radius;
+          border-radius: $radius;
+}
